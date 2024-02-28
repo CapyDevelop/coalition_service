@@ -5,11 +5,11 @@ import coalition_service.coalition_service_pb2 as coalition_service_pb2
 import coalition_service.coalition_service_pb2_grpc as coalition_service_pb2_grpc
 import grpc
 from dotenv import load_dotenv
-from .models import Peer
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from .generator import generate_random_hash
+from .models import Peer
 
 load_dotenv()
 print(os.getenv("DB_ENGINE"))
