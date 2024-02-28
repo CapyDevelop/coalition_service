@@ -9,6 +9,7 @@ RUN pip install -r requirements.txt
 RUN pip install gunicorn
 
 COPY . .
-COPY .env_docker .env
+#COPY .env_docker .env
+COPY alembic_docker.ini alembic.ini
 
-CMD ["python", "main.py"]
+CMD ["sh", "start.sh"]
