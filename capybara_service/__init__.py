@@ -69,6 +69,19 @@ class CoalitionService(coalition_service_pb2_grpc.CoalitionServiceServicer):
             session.close()
             return coalition_service_pb2.SetTgIdByKeyResponse(status=1, description="Not found")
 
+    def get_members(self, request, context):
+        session = Session()
+        peers = session.query(Peer).filter(Peer.login.like(f"%{request.nickname}%@student.21-school.ru")).all()
+        session.close()
+        members = []
+        for peer in peers:
+            members.append(coalition_service_pb2.Member(
+                login=peer.login,
+                school_user_id=peer.school_user_id,
+                tribe=peer.tribe
+            ))
+        return coalition_service_pb2.GetMembersResponse(members=members)
+
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
